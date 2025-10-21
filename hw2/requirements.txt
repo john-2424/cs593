@@ -1,0 +1,16 @@
+numpy>=1.23
+torch>=2.0
+gymnasium==0.29.0
+AutoROM==0.4.2
+AutoROM.accept-rom-license==0.6.1
+pygame==2.1.0
+pyglet==1.5.0
+matplotlib>=3.7
+moviepy==1.0.3
+imageio
+tqdm
+mujoco==2.2.1
+mujoco-py==2.1.2.14
+tensorboard>=2.10
+tensorboardX
+opencv-python
