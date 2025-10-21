@@ -451,7 +451,7 @@ class DQNAgent:
                 
                 # Log evaluation video
                 _, frames = utils.evaluate_policy(self.policy_net, self.env.observation_space, self.env_name, episodes=1, return_frames=True, max_length=1000)
-                # self.logger.add_frames('train-dqn/eval_video', frames, i_episode)
+                self.logger.add_frames('train-dqn/eval_video', frames, i_episode)
 
             print(f"Episode {i_episode} - Total Reward: {total_reward:.2f}, Epsilon: {self.eps_threshold:.3f}")
 
