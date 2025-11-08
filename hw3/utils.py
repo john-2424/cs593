@@ -141,12 +141,12 @@ def evaluate_policy(policy, obs_space, env_name, episodes=5, return_frames=False
                 raw_action = dist.sample()
                 
                 # Scale action to the environment's action space
-                low = torch.tensor(env.action_space.low, dtype=torch.float32)
-                high = torch.tensor(env.action_space.high, dtype=torch.float32)
+                low = torch.tensor(env.action_space.low, dtype=torch.float32, device=device)
+                high = torch.tensor(env.action_space.high, dtype=torch.float32, device=device)
                 scaled_action = low + (0.5 * (raw_action + 1.0) * (high - low))
             
             # Execute action - ensure proper shape
-            action_np = scaled_action.cpu().numpy()
+            action_np = scaled_action.detach().cpu().numpy()
             if len(action_np.shape) > 1 and action_np.shape[0] == 1:
                 action_np = action_np.flatten()
                 
