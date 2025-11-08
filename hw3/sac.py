@@ -60,6 +60,13 @@ class PolicyNetwork(nn.Module):
         return mean, std
     
     def sample(self, state):
+        if not torch.is_tensor(state):
+            state = torch.tensor(state, dtype=torch.float32, device=next(self.parameters()).device)
+        else:
+            state = state.to(next(self.parameters()).device)
+        if state.dim() == 1:
+            state = state.unsqueeze(0)
+
         mean, std = self.forward(state)
         normal = torch.distributions.Normal(mean, std)
         

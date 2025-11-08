@@ -83,7 +83,7 @@ class REINFORCEAgent:
     def select_action(self, state):
         '''Select action according to current policy'''
 
-        state_tensor = torch.tensor(state, dtype=torch.float32)
+        state_tensor = torch.tensor(state, dtype=torch.float32, device=self.device)
 
         # TODO: complete action selection:
 
@@ -109,11 +109,11 @@ class REINFORCEAgent:
         # squashed_action = torch.tanh(raw_action)
 
         # Scale action to the environment's action space (for stability)
-        low = torch.tensor(self.env.action_space.low, dtype=torch.float32)
-        high = torch.tensor(self.env.action_space.high, dtype=torch.float32)
+        low = torch.tensor(self.env.action_space.low, dtype=torch.float32, device=self.device)
+        high = torch.tensor(self.env.action_space.high, dtype=torch.float32, device=self.device)
         scaled_action = low + (0.5 * (raw_action + 1.0) * (high - low))
         
-        return scaled_action.numpy(), log_prob
+        return scaled_action.detach().cpu().numpy(), log_prob
         
 
 
@@ -170,7 +170,7 @@ class REINFORCEAgent:
             discounted_returns = self.calculate_discounted_returns(rewards)
             
             # Track loss for logging
-            returns_tensor = torch.tensor(discounted_returns, dtype=torch.float32)
+            returns_tensor = torch.tensor(discounted_returns, dtype=torch.float32, device=self.device)
             returns_normalized = (returns_tensor - returns_tensor.mean()) / (returns_tensor.std() + 1e-8)
 
             # TODO: Calculate policy loss

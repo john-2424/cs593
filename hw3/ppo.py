@@ -104,7 +104,7 @@ class PPOAgent:
     def select_action(self, state):
         '''Select action according to current policy and compute log probability'''
         with torch.no_grad():
-            state_tensor = torch.tensor(state, dtype=torch.float32)
+            state_tensor = torch.tensor(state, dtype=torch.float32, device=self.device)
             
             # Get action distribution parameters from actor
             mean, std = self.actor(state_tensor)
